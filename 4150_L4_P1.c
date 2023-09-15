@@ -1,0 +1,286 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure for a node in the linked list
+typedef struct Node
+{
+    int data;
+    struct Node *next;
+} Node;
+
+Node *start = NULL;
+Node *end = NULL;
+
+// Function to create a new node
+void delete();
+void insert();
+void create()
+{
+    Node *temp;
+    temp = (Node *)malloc(sizeof(Node));
+    printf("Enter the data: ");
+    scanf("%d", &temp->data);
+    if (start == NULL)
+    {
+        temp->next = NULL;
+        start = temp;
+        end = temp;
+    }
+    else
+    {
+        end->next = temp;
+        end = temp;
+        end->next = NULL;
+    }
+}
+
+// Function to display the linked list
+void display()
+{
+    Node *p;
+    if (start == NULL)
+    {
+        printf("Linked listed empty: ");
+    }
+    else
+    {
+        p = start;
+        while (p != NULL)
+        {
+            printf("\t%d",p->data);
+            p = p->next;
+        }
+    }
+}
+
+// Function to insert a node at the beginning of the linked list
+void insert_begin()
+{
+    Node *p;
+    p = (Node *)malloc(sizeof(Node));
+    printf("Enter the data: ");
+    scanf("%d", &p->data);
+    p->next = start;
+    start = p;
+}
+
+// Function to insert a node at the end of the linked list
+
+void insert_end()
+{
+    Node *p;
+    p = (Node *)malloc(sizeof(Node));
+    printf("Enter the data: ");
+    scanf("%d", &p->data);
+    p->next = p;
+    end = p;
+    end->next = NULL;
+}
+
+// Function to insert a node at any given position in the linked list
+
+void insert_mid()
+{
+    Node *p;
+    Node *current = start;
+    int loc, i = 1;
+    p = (Node *)malloc(sizeof(Node));
+    printf("Enter the data: ");
+    scanf("%d", &p->data);
+    printf("Enter the location at which you want to Insert Node: ");
+    scanf("%d", &loc);
+    while (loc != i + 1)
+    {
+        current = current->next;
+        i++;
+    }
+    p->next = current->next;
+    current->next = p;
+}
+
+// Function to delete a node from the beginning of the linked list
+
+void del_beg()
+{
+    Node *p;
+    p = start;
+    start = start->next;
+    printf("Element deleted is %d", p->data);
+    free(p);
+}
+// Function to delete a node from the end of the linked list
+
+void del_End()
+{
+    Node *p, *temp;
+    p = start;
+    while (p->next != NULL)
+    {
+        temp = p;
+        p = p->next;
+    }
+    temp->next = NULL;
+    printf("Element deleted is %d", temp->data);
+    free(temp);
+}
+
+// Function to delete a node from any given position in the linked list
+
+void del_mid()
+{
+    Node *p;
+    Node *current;
+    current = start;
+    int i = 1, loc;
+    printf("Enter the location of the node to be deleted:");
+    scanf("%d", &loc);
+    while (loc != i + 1)
+    {
+        current = current->next;
+        i++;
+    }
+    p = current->next;
+    current->next = p->next;
+    printf("Element deleted is %d", p->data);
+    free(p);
+}
+
+// Function to count the total number of nodes in the linked list
+int countNodes()
+{
+    int count = 0;
+    Node *p;
+    p = start;
+    while (p->next != NULL)
+    {
+        count++;
+        p = p->next;
+    }
+    return count;
+}
+
+// Function to search for an element in the linked list
+void searchElement()
+{
+    Node *p;
+    p = start;
+    int key, flag = 0;
+    printf("Enter the element you want to search: ");
+    scanf("%d", &key);
+    for (p = start; p != NULL; p = p->next)
+    {
+        if (p->data == key)
+        {
+            flag = 1;
+            break;
+        }
+    }
+    if (flag == 1)
+        printf("Element found");
+    else
+    {
+        printf("Element Not Found");
+    }
+}
+
+    void insert()
+    {
+        int ch;
+        printf("\n 1.Insert at beginning");
+        printf("\n 2.Insert at middle");
+        printf("\n 3.Insert at end");
+        scanf("%d", &ch);
+        switch (ch)
+        {
+        case 1:
+            insert_begin();
+            break;
+
+        case 2:
+            insert_mid();
+            break;
+
+        case 3:
+            insert_end();
+            break;
+
+        default:
+            printf("enter Correct Choice: ");
+        }
+    }
+
+    void delete ()
+    {
+        int ch;
+        printf("\n 1.delete at beginning");
+        printf("\n 2.delete at middle");
+        printf("\n 3.delete at end");
+        scanf("%d", &ch);
+        switch (ch)
+        {
+        case 1:
+            del_beg();
+            break;
+
+        case 2:
+            del_mid();
+            break;
+
+        case 3:
+            del_End();
+            break;
+
+        default:
+            printf("enter Correct Choice: ");
+        }
+    }
+
+
+    void main()
+    {
+        int ch;
+        while (1)
+        {
+            printf("\n 1.Create a new node");
+            printf("\n 2.Display the Linked list");
+            printf("\n 3.Insert a Node in linked list");
+            printf("\n 4.delete a node in linked list");
+            printf("\n 5.Count number of nodes in linked list");
+            printf("\n 6.Search the element in linked list");
+            printf("\n 7. Exit");
+            printf("\nEnter your Choice:\n");
+            scanf("%d", &ch);
+        switch (ch)
+        {
+        case 1:
+            create();
+            break;
+
+        case 2:
+            display();
+            break;
+
+        case 3:
+            insert();
+            break;
+
+        case 4:
+            delete ();
+            break;
+
+        case 5:
+            countNodes();
+            break;
+
+        case 6:
+            searchElement();
+            break;
+
+        case 7:
+            exit(0);
+
+        default:
+            printf("Enter Correct Choice: ");
+        }
+        }
+    }
